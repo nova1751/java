@@ -6,6 +6,7 @@ public class SparseArray {
         int[][] chessArr = new int[11][11];
         chessArr[1][2] = 1;
         chessArr[2][3] = 2;
+        chessArr[5][5] = 5;
         System.out.println("预览原始数组：");
         printChessArray(chessArr);
 
@@ -58,7 +59,12 @@ public class SparseArray {
         sparseArr[0][2] = sum;
         return sparseArr;
     }
-    /* 1.  */
+
+    /*
+     * 1. 创建原有大小的二维数组
+     * 2. 将稀疏数组中的有效数字返回到原来的二维数组中
+     * 3. 返回原来的二维矩阵
+     */
     private static int[][] sparseToChess(int[][] sparseArr) {
         int[][] chessArr = new int[sparseArr[0][0]][sparseArr[0][1]];
         for (int i = 1; i < sparseArr.length; i++) {
@@ -68,12 +74,15 @@ public class SparseArray {
         return chessArr;
     }
 
+    /*
+     * 通过两个for循环每行循环打印输出
+     */
     public static void printChessArray(int[][] chessArr) {
         for (int[] row : chessArr) {
             for (int data : row) {
                 System.out.printf("%-2d\t", data);
             }
-            System.out.println(" ");
+            System.out.println("");
         }
     }
 }
