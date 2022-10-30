@@ -1,95 +1,89 @@
 package DataStructure;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 public class Queue {
-    /**
-     * 定义装苹果的篮子
+    /*
+     * 主函数：
+     * 添加队列元素与展示队列元素
      */
-    public static class Basket {
-        // 篮子，能够容纳3个苹果
-        BlockingQueue<String> basket = new ArrayBlockingQueue<String>(3);
-
-        // 生产苹果，放入篮子
-        public void produce() throws InterruptedException {
-            // put方法放入一个苹果，若basket满了，等到basket有位置
-            basket.put("An apple");
-        }
-
-        // 消费苹果，从篮子中取走
-        public String consume() throws InterruptedException {
-            // get方法取出一个苹果，若basket为空，等到basket有苹果为止
-            String apple = basket.take();
-            return apple;
-        }
-
-        public int getAppleNumber() {
-            return basket.size();
-        }
-
-    }
-
-    // 测试方法
-    public static void testBasket() {
-        // 建立一个装苹果的篮子
-        final Basket basket = new Basket();
-        // 定义苹果生产者
-        class Producer implements Runnable {
-            public void run() {
-                try {
-                    while (true) {
-                        // 生产苹果
-                        System.out.println("生产者准备生产苹果："
-                                + System.currentTimeMillis());
-                        basket.produce();
-                        System.out.println("生产者生产苹果完毕："
-                                + System.currentTimeMillis());
-                        System.out.println("生产完后有苹果：" + basket.getAppleNumber() + "个");
-                        // 休眠300ms
-                        Thread.sleep(300);
-                    }
-                } catch (InterruptedException ex) {
-                }
-            }
-        }
-        // 定义苹果消费者
-        class Consumer implements Runnable {
-            public void run() {
-                try {
-                    while (true) {
-                        // 消费苹果
-                        System.out.println("消费者准备消费苹果："
-                                + System.currentTimeMillis());
-                        basket.consume();
-                        System.out.println("消费者消费苹果完毕："
-                                + System.currentTimeMillis());
-                        System.out.println("消费完后有苹果：" + basket.getAppleNumber() + "个");
-                        // 休眠1000ms
-                        Thread.sleep(1000);
-                    }
-                } catch (InterruptedException ex) {
-                }
-            }
-        }
-
-        ExecutorService service = Executors.newCachedThreadPool();
-        Producer producer = new Producer();
-        Consumer consumer = new Consumer();
-        service.submit(producer);
-        service.submit(consumer);
-        // 程序运行10s后，所有任务停止
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-        }
-        service.shutdownNow();
-    }
-
     public static void main(String[] args) {
-        Queue.testBasket();
+        ArrayQueue queue = new ArrayQueue(3);
+        queue.add(1);
+        queue.add(2);
+        queue.add(3);
+        System.out.println("查看队列中的数据：");
+        queue.show();
+        System.out.println("查看队列头数据：" + queue.head());
+        System.out.println("查看队列尾数据：" + queue.tail());
+        System.out.println("获取队列的数据：" + queue.get());
+        System.out.println("查看队列中的数据：");
+        queue.show();
+    }
+}
+
+class ArrayQueue {
+    // 确定队列的4个基本属性,使用private修饰符修饰成员变量
+    private int maxSize;
+    private int front;
+    private int rear;
+    private int arr[];
+
+    // 创建队列，初始化成员变量,使用构造函数创建
+    public ArrayQueue(int arrMaxSize) {
+        maxSize = arrMaxSize;
+        arr = new int[maxSize];
+        front = -1;
+        rear = -1;
+    }
+
+    // 取出队列的数据,同时使用isEmpty来判断队列是否为空
+    public int get() {
+        if (isEmpty()) {
+            throw new RuntimeException("队列空");
+        }
+        return arr[++front];
+    }
+
+    // 往队列中放入数据，用isFull来判断队列是否已满
+    public void add(int n) {
+        if (isFull()) {
+            System.out.println("队列已满！");
+            return;
+        }
+        arr[++rear] = n;
+    }
+
+    // 显示队列中的数据,判断不为空之后采用循环遍历的方式显示数据
+    public void show() {
+        if (isEmpty()) {
+            throw new RuntimeException("队列为空");
+        }
+        for (int i = 0; i < arr.length; i++) {
+            System.out.printf("arr[%d]: %d\n", i, arr[i]);
+        }
+    }
+
+    // 取出队头元素
+    public int head() {
+        if (isEmpty()) {
+            throw new RuntimeException("队列为空");
+        }
+        return arr[front + 1];
+    }
+
+    // 取出队尾元素
+    public int tail() {
+        if (isEmpty()) {
+            throw new RuntimeException("队列为空");
+        }
+        return arr[rear];
+    }
+
+    private boolean isFull() {
+        return rear == maxSize - 1;
+    }
+
+    private boolean isEmpty() {
+        return rear == front;
     }
 
 }
