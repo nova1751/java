@@ -9,7 +9,7 @@ public class Calculator {
     private ArrayStack operStack = new ArrayStack(10); // 符号栈
 
     public static void main(String[] args) {
-        String expression = "3+2*6/2/2-2";
+        String expression = "2*6/2/2-2";
 
         Calculator calculator = new Calculator();
         // 扫描表达式
@@ -19,12 +19,12 @@ public class Calculator {
         System.out.printf("%s = %d \n", expression, res);
     }
 
-
     /**
      * 第一步：扫描表达式
      */
     public void scan(String expression) {
         int index = 0;
+        String keepNum = ""; // 用来保存数字，可能是一位数或者多位数
         while (true) {
             if (index == expression.length()) {
                 break;
@@ -58,7 +58,20 @@ public class Calculator {
                 // ch 被当成 int 的使用的话，需要特别注意
                 // ASCII 码表中数字是从 48 开始的，这里的 ch 对应的数字是 ASCII 码表，所以要减掉 48
                 // 当然也可以使用字符串解析的方式 Integer.valueOf(字符串) 来得到数字
-                numStack.push(ch - 48);
+                // numStack.push(ch - 48);
+                keepNum += ch;
+                // 已经是末尾了，直接入栈
+                if (index == expression.length()) {
+                    numStack.push(Integer.parseInt(keepNum));
+                    continue;
+                }
+                // 需要往后多看一位，如果是符号，才能将当前的树入栈
+                char tempCh = expression.substring(index, index + 1).charAt(0);
+                if (isOper(tempCh)) {
+                    numStack.push(Integer.parseInt(keepNum));
+                    // 再初始化keepnum
+                    keepNum = "";
+                }
             }
         }
     }
