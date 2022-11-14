@@ -90,22 +90,38 @@ public class ShellSort {
         }
 
         Instant startTime = Instant.now();
-        shellSort(arr);
+        moveShellSort(arr);
+        // shellSort(arr);
         // System.out.println(Arrays.toString(arr));
         Instant endTime = Instant.now();
         System.out.println("共耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
     }
 
+    public void moveShellSortTest() {
+        int arr[] = { 8, 9, 1, 7, 2, 3, 5, 4, 6, 0 };
+        System.out.println("原始数组：" + Arrays.toString(arr));
+        moveShellSort(arr);
+    }
+
     public void moveShellSort(int[] arr) {
         for (int gap = arr.length / 2; gap > 0; gap /= 2) {
-            
+            for (int i = gap; i < arr.length; i++) {
+                int currentIndexValue = arr[i];
+                int insertIndex = i - gap;
+                while (insertIndex >= 0 && currentIndexValue < arr[insertIndex]) {
+                    arr[insertIndex + gap] = arr[insertIndex];
+                    insertIndex -= gap;
+                }
+                arr[insertIndex + gap] = currentIndexValue;
+            }
+            // System.out.println("增量为 " + gap + " 的这一轮排序后：" + Arrays.toString(arr));
         }
     }
 
     public static void main(String[] args) {
         ShellSort shellSort = new ShellSort();
-        // shellSort.processDemo();
         shellSort.bulkDataSort();
+        // shellSort.moveShellSortTest();
     }
 
 }
