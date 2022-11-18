@@ -139,6 +139,34 @@ public class BinaryTree {
             }
             return null;
         }
+
+        // HeroNode中新增删除方法
+        public HeroNode delete(int id) {
+            HeroNode target = null;
+            if (this.left != null && this.left.id == id) {
+                target = this.left;
+                this.left = null;
+                return target;
+            }
+            if (this.right != null && this.right.id == id) {
+                target = this.right;
+                this.right = null;
+                return target;
+            }
+            if (this.left != null) {
+                target = this.left.delete(id);
+                if (target != null) {
+                    return target;
+                }
+            }
+            if (this.right != null) {
+                target = this.right.delete(id);
+                if (target != null) {
+                    return target;
+                }
+            }
+            return null;
+        }
     }
 
     // 编写二叉树对象
@@ -211,6 +239,22 @@ public class BinaryTree {
             return root.postOrderSearch(id);
         }
 
+        // BinaryTree中新增删除方法
+        public HeroNode delete(int id) {
+            if (root == null) {
+                System.out.println("二叉树为空！");
+                return null;
+            }
+            HeroNode target = null;
+            if (root.id == id) {
+                target = root;
+                root = null;
+            } else {
+                target = this.root.delete(id);
+            }
+            return target;
+        }
+
     }
 
     public void fun1() {
@@ -232,7 +276,7 @@ public class BinaryTree {
         System.out.println("\n 后序遍历：");
         binaryTree.postOrder();
     }
-    
+
     public void fun3() {
         // 创建节点与构建二叉树
         HeroNode n1 = new HeroNode(1, "宋江");
