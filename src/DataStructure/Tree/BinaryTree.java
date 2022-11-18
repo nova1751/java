@@ -178,6 +178,39 @@ public class BinaryTree {
             root.postOrder();
         }
 
+        /**
+         * 前序查找
+         */
+        public HeroNode preOrderSearch(int id) {
+            if (root == null) {
+                System.out.println("二叉树为空");
+                return null;
+            }
+            return root.preOrderSearch(id);
+        }
+
+        /**
+         * 中序查找
+         */
+        public HeroNode infixOrderSearch(int id) {
+            if (root == null) {
+                System.out.println("二叉树为空");
+                return null;
+            }
+            return root.infixOrderSearch(id);
+        }
+
+        /**
+         * 后序查找
+         */
+        public HeroNode postOrderSearch(int id) {
+            if (root == null) {
+                System.out.println("二叉树为空");
+                return null;
+            }
+            return root.postOrderSearch(id);
+        }
+
     }
 
     public void fun1() {
@@ -199,10 +232,43 @@ public class BinaryTree {
         System.out.println("\n 后序遍历：");
         binaryTree.postOrder();
     }
+    
+    public void fun3() {
+        // 创建节点与构建二叉树
+        HeroNode n1 = new HeroNode(1, "宋江");
+        HeroNode n2 = new HeroNode(2, "无用");
+        HeroNode n3 = new HeroNode(3, "卢俊");
+        HeroNode n4 = new HeroNode(4, "林冲");
+        HeroNode n5 = new HeroNode(5, "关胜");
+        n1.left = n2;
+        n1.right = n3;
+        n3.right = n4;
+        n3.left = n5;
+        BinaryTreeDemo binaryTree = new BinaryTreeDemo();
+        binaryTree.root = n1;
+
+        System.out.println("找到测试：");
+        int id = 5;
+        System.out.println("\n前序遍历查找 id=" + id);
+        System.out.println(binaryTree.preOrderSearch(id));
+        System.out.println("\n中序遍历查找 id=" + id);
+        System.out.println(binaryTree.infixOrderSearch(id));
+        System.out.println("\n后序遍历查找 id=" + id);
+        System.out.println(binaryTree.postOrderSearch(id));
+
+        System.out.println("找不到测试：");
+        id = 15;
+        System.out.println("\n前序遍历查找 id=" + id);
+        System.out.println(binaryTree.preOrderSearch(id));
+        System.out.println("\n中序遍历查找 id=" + id);
+        System.out.println(binaryTree.infixOrderSearch(id));
+        System.out.println("\n后序遍历查找 id=" + id);
+        System.out.println(binaryTree.postOrderSearch(id));
+    }
 
     public static void main(String[] args) {
         BinaryTree binaryTree = new BinaryTree();
-        binaryTree.fun1();
+        binaryTree.fun3();
     }
 
 }
