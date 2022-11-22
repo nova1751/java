@@ -228,7 +228,21 @@ public class ThreadedBinaryTreeTest {
     }
 
     public void preOrderThreadeListTest() {
+        // 1,3,6,8,10,14
+        HeroNode n1 = new HeroNode(1, "宋江");
+        HeroNode n3 = new HeroNode(3, "无用");
+        HeroNode n6 = new HeroNode(6, "卢俊");
+        HeroNode n8 = new HeroNode(8, "林冲2");
+        HeroNode n10 = new HeroNode(10, "林冲3");
+        HeroNode n14 = new HeroNode(14, "林冲4");
+        n1.left = n3;
+        n1.right = n6;
+        n3.left = n8;
+        n3.right = n10;
+        n6.left = n14;
+
         ThreadedBinaryTree tree = new ThreadedBinaryTree();
+        tree.root = n1;
         tree.preOrderThreadeNodes();
         System.out.println("前序线索化遍历");
         tree.preOrderThreadeList(); // 1,3,8,10,6,14
