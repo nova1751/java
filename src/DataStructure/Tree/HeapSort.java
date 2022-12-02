@@ -7,9 +7,9 @@ import java.util.Arrays;
 public class HeapSort {
     // 测试主函数
     public void sortTest() {
-        int[] arr = { 4, 6, 8, 5, 9 };
-        sort(arr);
-        int[] arr2 = { 99, 4, 6, 8, 5, 9, -1, -2, 100 };
+        // int[] arr = { 4, 6, 8, 5, 9 };
+        // sort(arr);
+        int[] arr2 = { 503, 87, 512, 61, 908, 170, 897, 275, 653, 426 };
         sort(arr2);
     }
 
@@ -29,8 +29,9 @@ public class HeapSort {
             arr[0] = arr[j];
             arr[j] = temp;
             adjustHeap(arr, 0, j);
+            System.out.println(Arrays.toString(arr));
         }
-        System.out.println(Arrays.toString(arr));
+
     }
 
     // 编写调整堆的函数
