@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 
+import org.junit.Test;
+
 public class HeapSort {
     // 测试主函数
     public void sortTest() {
@@ -51,6 +53,7 @@ public class HeapSort {
         arr[i] = temp;
     }
 
+    @Test
     public void bulkDataSort() {
         int max = 800_000;
         // int max = 8;
