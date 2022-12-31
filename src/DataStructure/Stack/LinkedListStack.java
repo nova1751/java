@@ -1,6 +1,5 @@
 package DataStructure.Stack;
 
-
 public class LinkedListStack {
     // 构造三个基本属性
     int maxSize; // 栈中最多的元素
@@ -25,7 +24,7 @@ public class LinkedListStack {
     // 入栈函数，先判断是否为满，再将元素添加到链表的表头
     public void push(int value) {
         if (isFull()) {
-            System.out.println("栈已满！");
+            System.out.println("Stack full!");
             return;
         }
         // 储存top元素
@@ -41,7 +40,7 @@ public class LinkedListStack {
     // 出栈函数书写
     public int pop() {
         if (isEmpty()) {
-            throw new RuntimeException("栈已空！");
+            throw new RuntimeException("Stack empty!");
         }
         Node temp = top;
         top = top.next; // 注意已经存在的变量加上int会新创建变量
@@ -52,7 +51,7 @@ public class LinkedListStack {
     // 显示栈中的元素
     public void print() {
         if (isEmpty()) {
-            System.out.println("栈为空！");
+            System.out.println("Stack empty!");
             return;
         }
         Node cur = top;
@@ -76,6 +75,9 @@ class Node {
     // 重写toString函数
     @Override
     public String toString() {
-        return "Node{" + "value=" + '}';
+        return "Node{" +
+                "value=" + value +
+                '}';
+
     }
 }

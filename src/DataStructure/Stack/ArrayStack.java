@@ -25,7 +25,7 @@ public class ArrayStack {
     // 入栈函数书写，先判断是否为满再入栈
     public void push(int element) {
         if (isFull()) {
-            System.out.println("堆栈已满！");
+            System.out.println("Stack full!");
             return;
         }
         stack[++top] = element;
@@ -34,7 +34,7 @@ public class ArrayStack {
     // 出栈函数书写，先判断是否为空再出栈
     public int pop() {
         if (isEmpty()) {
-            throw new RuntimeException("栈中无数据");
+            throw new RuntimeException("No data in stack!");
         }
         return stack[top--];
     }
@@ -42,7 +42,7 @@ public class ArrayStack {
     // 打印栈中元素
     public void print() {
         if (isEmpty()) {
-            System.out.println("栈中无数据！");
+            System.out.println("No data in stack!");
             return;
         }
         for (int i = top; i >= 0; i--) {
@@ -53,7 +53,7 @@ public class ArrayStack {
     // 添加显示栈顶元素的方法
     public int peek() {
         if (isEmpty()) {
-            throw new RuntimeException("栈为空！");
+            throw new RuntimeException("Stack empty!");
         }
         return stack[top];
     }

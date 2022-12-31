@@ -1,7 +1,9 @@
 package DataStructure.Stack;
 
-public class LinkedListStackTest {
+import org.junit.Test;
 
+public class LinkedListStackTest {
+    @Test
     public void pushTest() {
         LinkedListStack stack = new LinkedListStack(4);
         stack.push(1);
@@ -12,14 +14,15 @@ public class LinkedListStackTest {
         stack.push(5);
     }
 
+    @Test
     public void popTest() {
         LinkedListStack stack = new LinkedListStack(4);
         stack.push(1);
         stack.push(2);
         stack.print();
-        System.out.println("pop 数据：" + stack.pop());
+        System.out.println("pop data:" + stack.pop());
         stack.print();
-        System.out.println("pop 数据：" + stack.pop());
+        System.out.println("pop data:" + stack.pop());
         stack.print();
     }
 }
