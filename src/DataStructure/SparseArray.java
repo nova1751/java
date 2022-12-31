@@ -7,15 +7,15 @@ public class SparseArray {
         chessArr[1][2] = 1;
         chessArr[2][3] = 2;
         chessArr[5][5] = 5;
-        System.out.println("预览原始数组：");
+        System.out.println("Raw array preview:");
         printChessArray(chessArr);
 
         int[][] sparseArr = chessToSparse(chessArr);
-        System.out.println("二维数组转稀疏数组");
+        System.out.println("chessArray to sparseArray:");
         printChessArray(sparseArr);
 
         int[][] chessArr2 = sparseToChess(sparseArr);
-        System.out.println("稀疏数组转二维数组");
+        System.out.println("sparseArray to chessArray:");
         printChessArray(chessArr2);
     }
 

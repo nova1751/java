@@ -14,7 +14,7 @@ class HeroNode {
         this.nickName = nickName;
     }
 
-    // 重写函数业基本一致
+    // 重写函数也基本一致
     @Override
     public String toString() {
         return "HeroNode{" +
@@ -43,7 +43,7 @@ public class DoubleLinkedList {
     // 修改值的函数，与单向链表基本相同
     public void update(HeroNode newNode) {
         if (head.next == null) {
-            System.out.println("链表为空！");
+            System.out.println("The linked list is empty!");
             return;
         }
 
@@ -61,16 +61,16 @@ public class DoubleLinkedList {
         }
         if (exist) {
             temp.name = newNode.name;
-            temp.nickName = newNode.name;
+            temp.nickName = newNode.nickName;
         } else {
-            System.out.printf("没有找到编号为： %d 的元素", newNode.no);
+            System.out.printf("no element found with number: %d !", newNode.no);
         }
     }
 
     // 删除函数与单向链表的思路基本相同，需要注意删除的操作以及最后一位元素的删除处理
     public void delete(int no) {
         if (head.next == null) {
-            System.out.println("链表为空！");
+            System.out.println("The linked list is empty!");
             return;
         }
 
@@ -87,7 +87,7 @@ public class DoubleLinkedList {
             temp = temp.next;
         }
         if (!exist) {
-            System.out.printf("编号为：%d 的元素不存在！", no);
+            System.out.printf("no element found with number: %d !", no);
             return;
         }
         if (temp.next != null) {
@@ -99,7 +99,7 @@ public class DoubleLinkedList {
     // 打印链表
     public void print() {
         if (head.next == null) {
-            System.out.println("链表为空");
+            System.out.println("The linked list is empty!");
             return;
         }
         HeroNode cur = head.next;
@@ -132,7 +132,7 @@ public class DoubleLinkedList {
             temp = temp.next;
         }
         if (exist) {
-            System.out.printf("准备插入的英雄编号 %d 已经存在，不能加入 \n", node.no);
+            System.out.printf("The phantom thief number %d to be inserted already exists and can't be added! \n", node.no);
             return;
         }
 

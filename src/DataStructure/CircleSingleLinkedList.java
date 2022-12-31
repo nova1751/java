@@ -16,13 +16,13 @@ public class CircleSingleLinkedList {
     /*
      * 添加节点
      * 1. 检查num的输入是否在1及以上
-     * 2. 通过cur指针循环前移，创建环形单列表
+     * 2. 通过cur指针循环前移，创建环形单链表
      * 3. 第一个节点为空的时候需要特殊考虑
      * 4. 添加节点的顺序为：cur指向boy,boy指向first,cur指针指向boy
      */
     public void add(int num) {
         if (num < 1) {
-            System.out.println("请输入大于1的数字！");
+            System.out.println("Please input a number greater than 1! ");
             return;
         }
         Boy cur = null;
@@ -45,12 +45,12 @@ public class CircleSingleLinkedList {
      */
     public void print() {
         if (first == null) {
-            System.out.println("队列为空");
+            System.out.println("Queue empty!");
             return;
         }
         Boy cur = first;
         while (true) {
-            System.out.printf("小孩编号 %d \n", cur.no);
+            System.out.printf("Child number %d \n", cur.no);
             cur = cur.next;
             // 如果和 first 一致，则标识已经走了一圈了
             if (cur == first) {
@@ -65,7 +65,7 @@ public class CircleSingleLinkedList {
                 countNum < 1 || // 每次至少数 1 下
                 startNo > nums // 开始小孩不能大于参与游戏的人数
         ) {
-            System.out.println("参数有误，请重新输入");
+            System.out.println("The parameter is incorrect.Please re-enter it!");
         }
         // 1. 初始化辅助变量到 first 的后面
         Boy helper = first;
@@ -82,7 +82,7 @@ public class CircleSingleLinkedList {
         }
 
         // 为了测试方便，这里添加一个日志输出
-        System.out.printf("定位到位置： %d \n", startNo);
+        System.out.printf("Localize: %d \n", startNo);
         print();
 
         // 3. 开始报数 和 出圈
@@ -98,10 +98,10 @@ public class CircleSingleLinkedList {
                 first = first.next;
             }
             // 出圈
-            System.out.printf("出圈小孩编号 %d \n", first.no);
+            System.out.printf("The number of the child out of the circle %d \n", first.no);
             first = first.next; // first 重置为下一次报数的小孩节点上
             helper.next = first; // helper 重置为下一次报数的小孩节点上
         }
-        System.out.printf("最后剩下小孩编号 %d \n", first.no);
+        System.out.printf("The number of the last child left %d \n", first.no);
     }
 }

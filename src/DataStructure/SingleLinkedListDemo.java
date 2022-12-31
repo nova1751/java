@@ -3,28 +3,35 @@ package DataStructure;
 import java.util.Stack;
 // 单向链表测试函数
 
+import org.junit.Before;
+import org.junit.Test;
+
 public class SingleLinkedListDemo {
     // 创建4个节点并调用函数添加对象
     public static void main(String[] args) {
-        HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
-        HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
-        HeroNode hero3 = new HeroNode(3, "吴用", "智多星");
-        HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
-        // test2();
+        SingleLinkedListDemo singleLinkedListDemo = new SingleLinkedListDemo();
+        singleLinkedListDemo.test1();
+        singleLinkedListDemo.test2();
+    }
+
+    public void test1() {
+        HeroNode hero1 = new HeroNode(1, "Amamiya Ren", "Joker");
+        HeroNode hero2 = new HeroNode(2, "Ryuji Sakamoto", "Skull");
+        HeroNode hero3 = new HeroNode(3, "Anne Takamaki", "Panther");
+        HeroNode hero4 = new HeroNode(4, "Yusuke Kitagawa", "Fox");
         SingleLinkedList singleLinkedList = new SingleLinkedList();
         singleLinkedList.add(hero1);
         singleLinkedList.add(hero2);
         singleLinkedList.add(hero3);
         singleLinkedList.add(hero4);
         singleLinkedList.list();
-
     }
 
-    public static void test2() {
-        HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
-        HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
-        HeroNode hero3 = new HeroNode(3, "吴用", "智多星");
-        HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
+    public void test2() {
+        HeroNode hero1 = new HeroNode(1, "Amamiya Ren", "Joker");
+        HeroNode hero2 = new HeroNode(2, "Ryuji Sakamoto", "Skull");
+        HeroNode hero3 = new HeroNode(3, "Anne Takamaki", "Panther");
+        HeroNode hero4 = new HeroNode(4, "Yusuke Kitagawa", "Fox");
 
         SingleLinkedList singleLinkedList = new SingleLinkedList();
 
@@ -35,6 +42,86 @@ public class SingleLinkedListDemo {
         singleLinkedList.addByOrder(hero3);
         singleLinkedList.list();
     }
+
+    private SingleLinkedList singleLinkedList;
+
+    @Before
+    public void before() {
+        HeroNode hero1 = new HeroNode(1, "Amamiya Ren", "Joker");
+        HeroNode hero2 = new HeroNode(2, "Ryuji Sakamoto", "Skull");
+        HeroNode hero3 = new HeroNode(3, "Anne Takamaki", "Panther");
+        HeroNode hero4 = new HeroNode(4, "Yusuke Kitagawa", "Fox");
+
+        singleLinkedList = new SingleLinkedList();
+
+        singleLinkedList.addByOrder(hero4); // 添加顺序提前
+        singleLinkedList.addByOrder(hero2);
+        singleLinkedList.addByOrder(hero1);
+        singleLinkedList.addByOrder(hero3);
+    }
+
+    @Test
+    public void updateTest() {
+        // 测试修改
+        System.out.println("Before update:");
+        singleLinkedList.list();
+        HeroNode hero4New = new HeroNode(4, "Yusuke Kitagawa-Test", "Fox-Test");
+        singleLinkedList.update(hero4New);
+
+        System.out.println("After update:");
+        singleLinkedList.list();
+    }
+
+    @Test
+    public void deleteTest() {
+        System.out.println("Before deletion:");
+        singleLinkedList.list();
+        singleLinkedList.delete(1);
+        singleLinkedList.delete(4);
+        System.out.println("After deletion:");
+        singleLinkedList.list();
+    }
+
+    @Test
+    public void lengthTest() {
+        System.out.println(singleLinkedList.length());
+        singleLinkedList.delete(1);
+        System.out.println(singleLinkedList.length());
+    }
+
+    @Test
+    public void findLastIndexNodeTest() {
+        singleLinkedList.list();
+        System.out.println("Search Test");
+        HeroNode lastIndexNode = singleLinkedList.findLastIndexNode(1);
+        System.out.println("Find the 1st last " + lastIndexNode);
+        lastIndexNode = singleLinkedList.findLastIndexNode(4);
+        System.out.println("Find the 4th last " + lastIndexNode);
+        lastIndexNode = singleLinkedList.findLastIndexNode(2);
+        System.out.println("Find the 2nd last " + lastIndexNode);
+        lastIndexNode = singleLinkedList.findLastIndexNode(5);
+        System.out.println("Find the 5th last " + lastIndexNode);
+    }
+
+    @Test
+    public void reverseTest() {
+        System.out.println("Before reversal:");
+        singleLinkedList.list();
+
+        singleLinkedList.reverse();
+
+        System.out.println("After reversal:");
+        singleLinkedList.list();
+    }
+
+    @Test
+    public void reversePrintTest() {
+        System.out.println("The data of the linked list:");
+        singleLinkedList.list();
+        System.out.println("Print in reverse order:");
+        singleLinkedList.reversePrint();
+    }
+
 }
 
 // 单向链表节点的书写
@@ -58,7 +145,7 @@ class SingleLinkedList {
     // 打印链表中的数据
     public void list() {
         if (head.next == null) {
-            System.out.println("链表为空！");
+            System.out.println("The linked list is empty!");
             return;
         }
         HeroNode temp = head.next;
@@ -90,7 +177,8 @@ class SingleLinkedList {
             temp = temp.next;
         }
         if (exist) {
-            System.out.printf("准备插入的英雄编号 %d 已经存在，不能加入 \n", node.no);
+            System.out.printf("The phantom thief number %d to be inserted already exists and can't be added! \n",
+                    node.no);
             return;
         }
         node.next = temp.next;
@@ -101,14 +189,14 @@ class SingleLinkedList {
     public void update(HeroNode newNode) {
         // 分为空和相等来区分计算
         if (head.next == null) {
-            System.out.println("链表为空");
+            System.out.println("The linked list is empty!");
             return;
         }
         HeroNode temp = head.next;
         boolean exist = false;
         while (true) {
             if (temp == null) {
-                System.out.println("链表为空！");
+                System.out.println("The linked list is empty!");
                 return;
             }
             if (temp.no == newNode.no) {
@@ -121,14 +209,14 @@ class SingleLinkedList {
             temp.name = newNode.name;
             temp.nickName = newNode.nickName;
         } else {
-            System.out.printf("未找到编号为 %d 的英雄", newNode.no);
+            System.out.printf("Phantom thief with number %d not found", newNode.no);
         }
     }
 
     // 删除节点操作
     public void delete(int no) {
         if (head.next == null) {
-            System.out.println("链表为空");
+            System.out.println("The linked list is empty!");
             return;
         }
         HeroNode temp = head;
@@ -144,7 +232,7 @@ class SingleLinkedList {
             temp = temp.next;
         }
         if (!exist) {
-            System.out.printf("未找到匹配的编号 %d \n", no);
+            System.out.printf("Phantom thief with number %d not found! \n", no);
             return;
         }
         // 删除操作
@@ -203,7 +291,7 @@ class SingleLinkedList {
 
     public void reversePrint() {
         if (head.next == null) {
-            System.out.println("链表为空");
+            System.out.println("The Linked List is Empty!");
             return;
         }
 
@@ -219,6 +307,7 @@ class SingleLinkedList {
             System.out.println(stack.pop());
         }
     }
+
 }
 
 // 构造链表中的一个节点
