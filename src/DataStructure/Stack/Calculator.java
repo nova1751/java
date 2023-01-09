@@ -9,7 +9,7 @@ public class Calculator {
     private ArrayStack operStack = new ArrayStack(10); // 符号栈
 
     public static void main(String[] args) {
-        String expression = "2*6/2/2-2";
+        String expression = "30-2*4+2";
 
         Calculator calculator = new Calculator();
         // 扫描表达式
@@ -19,12 +19,9 @@ public class Calculator {
         System.out.printf("%s = %d \n", expression, res);
     }
 
-    /**
-     * 第一步：扫描表达式
-     */
     public void scan(String expression) {
         int index = 0;
-        String keepNum = ""; // 用来保存数字，可能是一位数或者多位数
+        String keepNum = ""; // 用来保存数字，有可能是 = "1" 或则 "123" 的多位数
         while (true) {
             if (index == expression.length()) {
                 break;
@@ -33,26 +30,7 @@ public class Calculator {
             // 要注意这里的 ch，使用 ch 做运算的时候要小心
             char ch = expression.substring(index, ++index).charAt(0);
             if (isOper(ch)) {
-                // 符号栈为空，则直接入符号
-                if (operStack.isEmpty()) {
-                    operStack.push(ch);
-                    continue;
-                }
-                // 当 当前操作符 的优先级 大于 栈顶符号：将 当前操作符入符号栈
-                // 一定要大于，如果是同级的话，有可能前面一个也是 * 号，需要先在第一步进行计算
-                if (priority(ch) > priority((char) operStack.peek())) {
-                    operStack.push(ch);
-                    continue;
-                }
-                // 小于栈顶操作符，则将栈顶符号取出，进行计算
-                int num1 = numStack.pop();
-                int num2 = numStack.pop();
-                int oper = operStack.pop();
-                int res = cal(num1, num2, oper);
-                // 将结果入数栈
-                numStack.push(res);
-                // 将当期操作符入符号栈
-                operStack.push(ch);
+                subScan(ch);
             } else {
                 // 是数字，直接入数栈
                 // ch 被当成 int 的使用的话，需要特别注意
@@ -60,20 +38,37 @@ public class Calculator {
                 // 当然也可以使用字符串解析的方式 Integer.valueOf(字符串) 来得到数字
                 // numStack.push(ch - 48);
                 keepNum += ch;
-                // 已经是末尾了，直接入栈
+                // 已经是末尾了，则直接入栈
                 if (index == expression.length()) {
                     numStack.push(Integer.parseInt(keepNum));
                     continue;
                 }
-                // 需要往后多看一位，如果是符号，才能将当前的树入栈
+                // 需要往后多看一位,如果是符号，才能将当前的数入栈
                 char tempCh = expression.substring(index, index + 1).charAt(0);
                 if (isOper(tempCh)) {
                     numStack.push(Integer.parseInt(keepNum));
-                    // 再初始化keepnum
                     keepNum = "";
                 }
             }
         }
+    }
+
+    public void subScan(char ch) {
+        // 当 当前操作符 的优先级 大于 栈顶符号：将 当前操作符入符号栈
+        // 一定要大于，如果是同级的话，有可能前面一个也是 * 号，需要先在第一步进行计算
+        if (operStack.isEmpty() || priority(ch) > priority((char) operStack.peek())) {
+            operStack.push(ch);
+            return;
+        }
+        // 小于栈顶操作符，则将栈顶符号取出，进行计算
+        int num1 = numStack.pop();
+        int num2 = numStack.pop();
+        int oper = operStack.pop();
+        int res = cal(num1, num2, oper);
+        // 将结果入数栈
+        numStack.push(res);
+        // 递归调用
+        subScan(ch);
     }
 
     /**
