@@ -1,88 +1,81 @@
 package DataStructure;
 
 public class SparseArray {
-    // 主函数：负责打印原始数组，转换后的稀疏数组，以及在转换回来的二维数组
+    // 主函数：负责初始化原始二维数组，同时测试原始二维数组与稀疏数组的互相转换
     public static void main(String[] args) {
-        int[][] chessArr = new int[11][11];
-        chessArr[1][2] = 1;
-        chessArr[2][3] = 2;
-        chessArr[5][5] = 5;
+        // 1. 创建原始数组并初始化
+        int[][] chessArray = new int[8][9];
+        chessArray[3][5] = 1;
+        chessArray[4][0] = 2;
+        chessArray[5][7] = 3;
+        chessArray[7][7] = 3;
+        // 2. 打印原始二维数组
         System.out.println("Raw array preview:");
-        printChessArray(chessArr);
-
-        int[][] sparseArr = chessToSparse(chessArr);
+        printArray(chessArray);
+        // 3. 原始二维数组转稀疏数组
+        int[][] sparseArray = chessToSparse(chessArray);
+        // 4. 打印稀疏数组
         System.out.println("chessArray to sparseArray:");
-        printChessArray(sparseArr);
-
-        int[][] chessArr2 = sparseToChess(sparseArr);
-        System.out.println("sparseArray to chessArray:");
-        printChessArray(chessArr2);
+        printArray(sparseArray);
+        // 稀疏数组转二维数组
+        chessArray = sparseToChess(sparseArray);
+        // 打印转换回来的稀疏数组
+        System.out.println("chessArray to sparseArray:");
+        printArray(chessArray);
     }
 
-    // 二维数组转稀疏数组：
-    // 1. 记录有效数字的个数sum
-    // 2. 创建稀疏数组int[sum+1][3]
-    // 3. 记录chessRow和chessCol以及有效数字count
-    // 4. 遍历数组,为稀疏数组sparseArr赋值
-    // 5. 返回稀疏数组
-    private static int[][] chessToSparse(int[][] chessArr) {
+    // 书写二维数组打印函数
+    private static void printArray(int[][] arr) {
+        // 采用两个增强for循环配合system.out.printf格式化输出二维数组
+        for (int[] row : arr) {
+            for (int col : row) {
+                System.out.printf("%-2d ", col);
+            }
+            // 换行
+            System.out.println();
+        }
+    }
+
+    // 书写原始数组转稀疏数组的函数
+    private static int[][] chessToSparse(int[][] arr) {
+        // 确定稀疏数组的有效数字个数，即sum的值
         int sum = 0;
-        for (int[] row : chessArr) {
-            for (int chess : row) {
-                if (chess != 0) {
+        for (int[] row : arr) {
+            for (int col : row) {
+                if (col != 0) {
                     sum++;
                 }
             }
         }
-        int[][] sparseArr = new int[sum + 1][3];
-        int chessRow = chessArr.length;
-        int chessCol = 0;
-        int count = 0;
-        for (int i = 0; i < chessArr.length; i++) {
-            int[] rows = chessArr[i];
-            if (chessCol == 0) {
-                chessCol = rows.length;
-            }
-            for (int j = 0; j < rows.length; j++) {
-                int chess = rows[j];
-                if (chess == 0) {
-                    continue;
+        // 初始化稀疏数组
+        int[][] sparseArray = new int[sum + 1][3];
+        // 完成稀疏数字第一行的填充
+        sparseArray[0][0] = arr.length;
+        sparseArray[0][1] = arr[0].length;
+        sparseArray[0][2] = sum;
+        // 通过两层for循环遍历有效数字，填充稀疏数组剩余值
+        int index = 1;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                if (arr[i][j] != 0) {
+                    sparseArray[index][0] = i;
+                    sparseArray[index][1] = j;
+                    sparseArray[index][2] = arr[i][j];
+                    index++;
                 }
-                count++;
-                sparseArr[count][0] = i;
-                sparseArr[count][1] = j;
-                sparseArr[count][2] = chess;
             }
         }
-        sparseArr[0][0] = chessRow;
-        sparseArr[0][1] = chessCol;
-        sparseArr[0][2] = sum;
-        return sparseArr;
+        return sparseArray;
     }
 
-    /*
-     * 1. 创建原有大小的二维数组
-     * 2. 将稀疏数组中的有效数字返回到原来的二维数组中
-     * 3. 返回原来的二维矩阵
-     */
-    private static int[][] sparseToChess(int[][] sparseArr) {
-        int[][] chessArr = new int[sparseArr[0][0]][sparseArr[0][1]];
-        for (int i = 1; i < sparseArr.length; i++) {
-            int[] rows = sparseArr[i];
-            chessArr[rows[0]][rows[1]] = rows[2];
+    // 编写稀疏数组转二维数组的函数
+    private static int[][] sparseToChess(int[][] arr) {
+        // 创建二维数组
+        int[][] chessArray = new int[arr[0][0]][arr[0][1]];
+        // 采用for循环给稀疏数组赋值
+        for (int i = 1; i < arr.length; i++) {
+            chessArray[arr[i][0]][arr[i][1]] = arr[i][2];
         }
-        return chessArr;
-    }
-
-    /*
-     * 通过两个for循环每行循环打印输出
-     */
-    public static void printChessArray(int[][] chessArr) {
-        for (int[] row : chessArr) {
-            for (int data : row) {
-                System.out.printf("%-2d\t", data);
-            }
-            System.out.println("");
-        }
+        return chessArray;
     }
 }
