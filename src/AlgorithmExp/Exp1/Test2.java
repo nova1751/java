@@ -181,6 +181,6 @@ public class Test2 {
 
     // 主方法，调用测试方法
     public static void main(String[] args) {
-        test(10); // 随机生成10个点进行测试
+        test(500); // 随机生成10个点进行测试
     }
 }

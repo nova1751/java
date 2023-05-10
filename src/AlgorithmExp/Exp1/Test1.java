@@ -7,20 +7,21 @@ import java.util.Random;
 
 public class Test1 {
     private static int[][] createMatrix() {
-        Random rand = new Random();
-        int rows = 100;
-        int cols = 100;
+        // Random rand = new Random();
+        int rows = 16;
+        int cols = 16;
         int[][] matrix = new int[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                matrix[i][j] = rand.nextInt(100);
+                // matrix[i][j] = rand.nextInt(100);
+                matrix[i][j] = 1;
             }
         }
         return matrix;
     }
 
     // 书写二维数组打印函数
-    private static void printArray(int[][] arr) {
+    public static void printArray(int[][] arr) {
         // 采用两个增强for循环配合system.out.printf格式化输出二维数组
         for (int[] row : arr) {
             for (int col : row) {
@@ -126,7 +127,22 @@ class Strassen {
             P5 = strassenMartixMultiplyRecursive(S5, S6);// P5 = S5 X S6
             P6 = strassenMartixMultiplyRecursive(S7, S8);// P6 = S7 X S8
             P7 = strassenMartixMultiplyRecursive(S9, S10);// P7 = S9 X S10
-
+            // if (rows == 2) {
+                System.out.println("Matrix 1:");
+                Test1.printArray(P1);
+                System.out.println("Matrix 2:");
+                Test1.printArray(P2);
+                System.out.println("Matrix 3:");
+                Test1.printArray(P3);
+                System.out.println("Matrix 4:");
+                Test1.printArray(P4);
+                System.out.println("Matrix 5:");
+                Test1.printArray(P5);
+                System.out.println("Matrix 6:");
+                Test1.printArray(P6);
+                System.out.println("Matrix 7:");
+                Test1.printArray(P7);
+            // }
             int[][] C11 = new int[rows / 2][rows / 2];
             int[][] C12 = new int[rows / 2][rows / 2];
             int[][] C21 = new int[rows / 2][rows / 2];
