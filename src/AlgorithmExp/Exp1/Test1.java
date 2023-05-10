@@ -1,13 +1,15 @@
 package AlgorithmExp.Exp1;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Random;
 
 public class Test1 {
     private static int[][] createMatrix() {
         Random rand = new Random();
-        int rows = 16;
-        int cols = 16;
+        int rows = 100;
+        int cols = 100;
         int[][] matrix = new int[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -32,8 +34,14 @@ public class Test1 {
     public static void main(String[] args) {
         int[][] matrix1 = createMatrix();
         int[][] matrix2 = createMatrix();
+        Instant startTime = Instant.now();
         int[][] result1 = Strassen.strassenMartixMultiplyRecursive(matrix1, matrix2);
+        Instant endTime = Instant.now();
+        System.out.println("共耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
+        startTime = Instant.now();
         int[][] result2 = Normal.squareMatrixMultiply(matrix1, matrix2);
+        endTime = Instant.now();
+        System.out.println("共耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
         System.out.println("Strassen Matrix Mulitple Product");
         printArray(result1);
         System.out.println("Normal Matrix Mulitple Product");
