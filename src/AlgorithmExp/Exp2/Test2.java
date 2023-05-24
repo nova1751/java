@@ -42,5 +42,6 @@ public class Test2 {
 
         String lcs = longestCommonSubsequence(s1, s2);
         System.out.println("最长公共子序列为: " + lcs);
+        System.out.println("长度为：" + lcs.length());
     }
 }
